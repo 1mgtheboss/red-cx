@@ -1,0 +1,144 @@
+<!doctype html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>Red CX</title>
+    <link href="https://fonts.googleapis.com/css?family=Mansalva&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Raleway&display=swap" rel="stylesheet">
+    <style>
+        body {
+            background: #EB3349;
+            /* fallback for old browsers */
+            background: -webkit-linear-gradient(to right, #F45C43, #EB3349);
+            /* Chrome 10-25, Safari 5.1-6 */
+            background: linear-gradient(to right, #F45C43, #EB3349);
+            /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+            color: white;
+            font-family: 'Raleway', sans-serif;
+        }
+
+        .header {
+            font-size: 1000%;
+            font-family: 'Mansalva', cursive;
+        }
+
+        .header-1 {
+            font-size: 125%;
+        }
+
+        input {
+            width: 100%;
+            border: 1px solid #ffffff;
+            background-color: transparent;
+            color: #ffffff;
+            outline: none;
+        }
+
+        ::-webkit-input-placeholder {
+            /* Edge */
+            color: #ffffff;
+        }
+
+        :-ms-input-placeholder {
+            /* Internet Explorer 10-11 */
+            color: #ffffff;
+        }
+
+        ::placeholder {
+            color: #ffffff;
+        }
+    </style>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script src="https://sso-project-mgtheboss.apps.hackathon.rhmi.io/auth/js/keycloak.js"></script>
+    <script>
+        var keycloak = Keycloak();
+        keycloak.init({ onLoad: 'login-required' }).success(function(authenticated) {
+            alert(authenticated ? 'authenticated' : 'not authenticated');
+        }).error(function() {
+            alert('failed to initialize');
+        });
+    </script>
+</head>
+
+<body>
+    <span class="header">Red CX</span><br>
+    <span class="header-1">Probabilistic inference based customer experience engine</span><br><br><br>
+    According to basic axioms of probability,<br><br>
+    •0<=P(C)<=1, where P(C) stands for probability of a customer having a good experience<br>
+        •P(CT)=1 & P(CF)=0, where P(CT) stands for probability of a satisfied customer having a good experience & P(CF) stands for probability of a dissatisfied customer having a good experience<br>
+        •P(C1∪C2)=P(C1)+P(C2)-P(C1∩C2), where P(C1) stands for probability of customer 1 having a good experience, P(C2) stands for probability of customer 2 having a good experience, P(C1∪C2) stands for probability of customer 1 or customer 2 having a good experience, & P(C1∩C2) stands for probability of customer 1 & customer 2 having a good experience.<br>
+        <br><br>
+        According to the definition of conditional probability,<br><br>
+        •P(C1|C2)=P(C1∩C2)/P(C2) where P(C1|C2) stands for probability of customer 1 having a good experience given that customer 2 has already had a good experience, P(C1∩C2) stands for probability of customer 1 & customer 2 having a good experience, & P(C2) stands for probability of customer 2 having a good experience, with P(C2)>0<br>
+        •The above-mentioned expression can be rewritten as P(C1∩C2)=P(C2)P(C1|C2)<br>
+        •For 3 customers the expression will be, P(C1∩C2∩C3)=P(C1)P(C2|C1)P(C3|C1∩C2), where P(C1∩C2∩C3) stands for probability of customer 1, 2, & 3 having a good experience, P(C1) stands for probability of customer 1 having a good experience, P(C2|C1) stands for probability of customer 2 having a good experience given that customer 1 has already had a good experience, & P(C3|C1∩C2) stands for probability of customer 3 having a good experience given that customer 1 & customer 2 have already had a good experience<br>
+        •The generalized expression is called chain rule, which can be used to calculate the probability of all customers having a good experience, P(∩ k=1 to n CK)=Π k=1 to n P(CK|∩ j=1 to k-1 CJ). Red CX is based on this rule.<br>
+        <br><br>
+        According to the definition of independence,<br><br>
+        •P(C1|C2)=P(C1), if customer 1 having a good experience is independent of customer 2 having a good experience, where P(C1|C2) stands for probability of customer 1 having a good experience given that customer 2 has already had a good experience & P(C1) stands for probability of customer 1 having a good experience<br>
+        <br><br>
+        According to the definition of conditional independence,<br><br>
+        •P(C1|C2,C3)=P(C1|C3), if customer 1 having a good experience & customer 2 having a good experience are conditionally independent given that customer 3 has already had a good experience, where P(C1|C2,C3) stands for probability of customer 1 having a good experience given that customer 2 & customer 3 have already had a good experience & P(C1|C3) stands for probability of customer 1 having a good experience given that customer 3 has already had a good experience<br>
+        •P(C1∩C2|C3)=P(C1|C3)P(C2|C3), if customer 1 having a good experience & customer 2 having a good experience are conditionally independent given that customer 3 has already had a good experience, with P(C3)>0, where P(C1∩C2|C3) stands for probability of customer 1 & customer 2 having a good experience given that customer 3 has already had a good experience, P(C1|C3) stands for probability of customer 1 having a good experience given that customer 3 has already had a good experience, & P(C2|C3) stands for probability of customer 2 having a good experience given that customer 3 has already had a good experience<br>
+        <br><br>
+        <input type="text" id="no-of-customers" placeholder="Please enter no. of customers"><br><br>
+        <div id="right-side"></div><br><br>
+        <div id="message-to-user"></div>
+        <div id="result"></div>
+        <script>
+            $(document).ready(function() {
+
+                function getplaceholder(k) {
+                    if (k == 1) {
+                        var expression = "Please enter the value of P(C1)";
+                        return expression;
+                    }
+                    if (k == 2) {
+                        var expression = "Please enter the value of P(C2|C1)";
+                        return expression;
+                    }
+                    var expression = "Please enter the value of P(C" + k + "|∩ j=1 to " + (k - 1) + " CJ)";
+                    return expression;
+
+                }
+                $("#no-of-customers").on("input", function(e) {
+                    if (isNaN(parseInt($(this).val()))) {
+                        $("#right-side").html("").hide().fadeIn();
+                        $("#message-to-user").html("Please enter a no.").hide().fadeIn();
+                        return;
+                    }
+                    $("#message-to-user").html("").hide().fadeIn();
+                    var rightsidecontent = "",
+                        n = parseInt($(this).val());
+
+                    for (var i = 0; i < n; i++) {
+                        rightsidecontent += "<input type=\"text\" class=\"right-side-component\" placeholder=\"" + getplaceholder(i + 1) + "\">";
+                    }
+
+                    $("#right-side").html(rightsidecontent).hide().fadeIn();
+                    $(".right-side-component").on("input", function(e) {
+                        if ((parseFloat($(this).val()) > 1) || (parseFloat($(this).val()) < 0) || isNaN(parseFloat($(this).val()))) {
+                            $("#result").html("").hide().fadeIn();
+                            $("#message-to-user").html("Please enter a valid floating point no, between 0 & 1.").hide().fadeIn();
+                            return;
+                        }
+                        $("#message-to-user").html("").hide().fadeIn();
+                        var product = 1.0;
+                        $(".right-side-component").each(function() {
+                            console.log($(this).val());
+                            product *= parseFloat($(this).val());
+                        });
+                        if (isNaN(product)) {
+                            return;
+                        }
+                        $("#result").html("The probability of all customers having a good experience i.e. P(∩ k=1 to " + parseInt($("#no-of-customers").val()) + " CK) is " + product.toFixed(4)).hide().fadeIn();
+                    });
+
+                });
+
+            });
+        </script>
+</body>
+
+</html>

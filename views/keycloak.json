@@ -1,0 +1,8 @@
+{
+  "realm": "master",
+  "auth-server-url": "https://sso-project-mgtheboss.apps.hackathon.rhmi.io/auth",
+  "ssl-required": "external",
+  "resource": "javascript-adapter-client",
+  "public-client": true,
+  "confidential-port": 0
+}
