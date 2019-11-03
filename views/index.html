@@ -48,30 +48,30 @@
         ::placeholder {
             color: #ffffff;
         }
-		
-		a {
-		color: #ffffff;
-		text-decoration: none;
-		}
+
+        a {
+            color: #ffffff;
+            text-decoration: none;
+        }
     </style>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-<script src="https://sso-project-mgtheboss.apps.hackathon.rhmi.io/auth/js/keycloak.js"></script>
+    <script src="https://sso-project-mgtheboss.apps.hackathon.rhmi.io/auth/js/keycloak.js"></script>
     <script>
         var keycloak = Keycloak();
-        keycloak.init({ onLoad: 'login-required' }).success(function(authenticated) {
-            
+        keycloak.init({
+            onLoad: 'login-required'
+        }).success(function(authenticated) {
+
         }).error(function() {
-            
+
         });
-		
-		
     </script>
 </head>
 
 <body>
     <span class="header">Red CX</span><br>
     <span class="header-1">Probabilistic inference based customer experience engine</span><br><br><br>
-	<a href="#" id="log-out">Log out</a><br><br><br>
+    <a href="#" id="log-out">Log out</a><br><br><br>
     According to basic axioms of probability,<br><br>
     •0<=P(C)<=1, where P(C) stands for probability of a customer having a good experience<br>
         •P(CT)=1 & P(CF)=0, where P(CT) stands for probability of a satisfied customer having a good experience & P(CF) stands for probability of a dissatisfied customer having a good experience<br>
@@ -94,13 +94,12 @@
         <div id="right-side"></div><br><br>
         <div id="message-to-user"></div>
         <div id="result"></div>
-		<script>
-		document.getElementById("log-out").addEventListener("click", function() {
-		keycloak.logout();
-		
-		});
-		
-		</script>
+        <script>
+            document.getElementById("log-out").addEventListener("click", function() {
+                keycloak.logout();
+
+            });
+        </script>
         <script>
             $(document).ready(function() {
 
@@ -121,9 +120,11 @@
                     if (isNaN(parseInt($(this).val()))) {
                         $("#right-side").html("").hide().fadeIn();
                         $("#message-to-user").html("Please enter a no.").hide().fadeIn();
+                        $("#result").html("").hide().fadeIn();
                         return;
                     }
                     $("#message-to-user").html("").hide().fadeIn();
+                    $("#result").html("").hide().fadeIn();
                     var rightsidecontent = "",
                         n = parseInt($(this).val());
 
